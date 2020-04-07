@@ -4,17 +4,20 @@ import { Loading } from './LoadingComponent';
 import { baseUrl } from '../shared/baseUrl';
 
 function RenderCard({item, isLoading, errMess}) {
+    console.log("olf_debug RenderCard Start")
     if (isLoading) {
         return(
             <Loading />
         );
     }
     else if (errMess){
+        console.log("olf_debug detected err message")
         return(
             <h4>{errMess}</h4>
         );
     }
     else {
+        console.log("olf_debug got here by mistake")
         return(
             <Card>
                 <CardImg src={baseUrl + item.image} alt={item.name} />
