@@ -21,11 +21,23 @@ class Contact extends Component {
 
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        console.log("before");
+        console.log(this.props.feedbackList);
+
+        this.props.postFeedback(
+            values.firstname,
+            values.lastname,
+            values.telnum,
+            values.email,
+            values.agree,
+            values.contactType,
+            values.message
+        );
+        console.log("after");
+        console.log(this.props.feedbackList);
+        alert(JSON.stringify(this.props.feedbackList));
         this.props.resetFeedbackForm();
-
     }
-
 
 
     render(){
@@ -73,7 +85,11 @@ class Contact extends Component {
                         <h3>Send us Your Feedback</h3>
                     </div>
                     <div className="col-12 col-md-9">
-                        <Form model="feedback" onSubmit={(values) => this.handleSubmit(values)}>
+                        <Form 
+                            model="feedback" 
+                            onSubmit={(values) => this.handleSubmit(values)}
+                            onReset={this.props.resetFeedbackForm()}
+                        >
                             <Row className="form-group">
                                 <Label htmlFor="firstname" md={2}>First Name</Label>
                                 <Col md={10}>
@@ -163,9 +179,40 @@ class Contact extends Component {
                                 </Col>
                             </Row>
                             <Row className="form-group">
-                                <Col md={{size:10, offset: 2}}>
+                                <Col md={{ size: 6, offset: 2 }}>
+                                    <div className="form-check">
+                                        <Label>
+                                            <Control.checkbox model=".agree" name="agree" className="form-check-input" />
+                                            <strong>May we contact you?</strong>
+                                        </Label>
+                                    </div>
+                                </Col>
+                                <Col md={{ size: 3, offset: 1 }}>
+                                    <Control.select model=".contactType" name="contactType" className="form-control" >
+                                        <option selected value="Tel.">Tel.</option>
+                                        <option value="Email">Email</option>
+                                    </Control.select>
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Label htmlFor="email" md={2}>Your Feedback</Label>
+                                <Col md={10}>
+                                    <Control.textarea
+                                        model=".message"
+                                        className="form-control"
+                                        rows="10"
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={{size:3, offset: 2}}>
                                     <Button type="submit" color="primary">
                                     Send Feedback
+                                    </Button>
+                                </Col>
+                                <Col md={3}>
+                                    <Button type="reset" color="outline-primary">
+                                    Cancel
                                     </Button>
                                 </Col>
                             </Row>
